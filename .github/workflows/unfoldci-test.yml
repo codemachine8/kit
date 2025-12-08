@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   test-cross-platform:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # Changed to macOS for WebKit support
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -31,7 +31,7 @@ jobs:
         run: pnpm install
         
       - name: Install Playwright browsers
-        run: pnpm exec playwright install chromium
+        run: pnpm exec playwright install webkit  # Changed to webkit
         
       - name: Build kit package
         run: pnpm --filter @sveltejs/kit build
@@ -44,6 +44,8 @@ jobs:
         continue-on-error: true
         env:
           CI: true
+          KIT_E2E_BROWSER: webkit  # Added: Use WebKit browser
+          DEV: true  # Added: Match the failing config (dev mode)
           PLAYWRIGHT_JUNIT_OUTPUT_NAME: test-results/junit-results.xml
           
       - name: Upload test results
