@@ -63,4 +63,4 @@ jobs:
           api-key: ${{ secrets.UNFOLDCI_API_KEY }}
           results-path: '**/test-results/**/*.xml'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
